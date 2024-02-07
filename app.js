@@ -1,33 +1,49 @@
-let lista_fake = []
+let listaDeTarefas = []
+let key = 'lista'
+verificarElementos()
+mostrarElementos()
 
-function adicionar(){ 
-    
-    lista_fake.pop()
-    lista_fake.push(document.getElementById('txt1').value) 
+function adicionarTarefa(){
+    let a = String(document.getElementById('txt1').value).trim()
+    if (a.length === 0){
+        alert('adicione algum valor a sua lista!')
+        return
+    }
+    document.getElementById('itens').innerText = ''
+    listaDeTarefas.push(document.getElementById('txt1').value)
+    localStorage.setItem(key,JSON.stringify(listaDeTarefas))
     document.getElementById('txt1').value=''
-    listarElementos()
+    mostrarElementos()
 }
 
-
-function listarElementos(){
-    for (x of lista_fake){
-        createElements()
-
+function mostrarElementos(){
+    for (x of listaDeTarefas){
+        criarElemento()        
     }
 }
 
-function createElements(){
+function criarElemento(){
     let new_button = document.createElement('button')
     let new_value = document.createElement('span')
     document.getElementById('itens').appendChild(new_button).textContent='x'
     document.getElementById('itens').appendChild(new_value) 
     new_value.innerHTML = `${x}<br>`
     new_button.onclick = function(){
+        let pos = listaDeTarefas.indexOf(x)
+        listaDeTarefas.splice(pos,1)
         new_button.remove()
         new_value.remove()  
+        localStorage.setItem(key,JSON.stringify(listaDeTarefas))
+
         
     }
+    
 }
 
+function verificarElementos(){
+    let lista = JSON.parse(localStorage.getItem(key))
+    listaDeTarefas = lista
+
+}
 
 
