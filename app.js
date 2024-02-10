@@ -1,5 +1,7 @@
+let key = 'key'
 let listaDeTarefas = []
-let key = 'lista'
+
+
 verificarElementos()
 mostrarElementos()
 
@@ -41,6 +43,11 @@ function criarElemento(){
 }
 
 function verificarElementos(){
+
+if (localStorage.getItem('key') === null){
+    localStorage.setItem(key,'lista')
+}
+
     let lista = JSON.parse(localStorage.getItem(key))
     listaDeTarefas = lista
 
